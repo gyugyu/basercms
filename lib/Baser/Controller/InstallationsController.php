@@ -131,7 +131,7 @@ class InstallationsController extends AppController {
 				break;
 		}
 
-		if (strpos($this->request->webroot, 'webroot') === false) {
+		if (strpos($this->request->webroot, 'webroot') === false && $this->request->action != 'step5') {
 			$this->request->webroot = DS;
 		}
 
