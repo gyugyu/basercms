@@ -468,6 +468,13 @@ class BcManagerComponent extends Component {
 		if (!$siteUrl) {
 			$siteUrl = siteUrl();
 		}
+		if (preg_match('/^https/', $siteUrl)) {
+			$sslUrl = $siteUrl;
+			$adminSsl = 'true';
+		} else {
+			$sslUrl = '';
+			$adminSsl = 'false';
+		}
 		$installCoreData = array("<?php",
 			"Configure::write('Security.salt', '{$securitySalt}');",
 			"Configure::write('Security.cipherSeed', '{$secrityCipherSeed}');",
@@ -475,8 +482,8 @@ class BcManagerComponent extends Component {
 			"Configure::write('Cache.check', true);",
 			"Configure::write('Session.save', 'session');",
 			"Configure::write('BcEnv.siteUrl', '{$siteUrl}');",
-			"Configure::write('BcEnv.sslUrl', '');",
-			"Configure::write('BcApp.adminSsl', false);",
+			"Configure::write('BcEnv.sslUrl', '{$sslUrl}');",
+			"Configure::write('BcApp.adminSsl', {$adminSsl});",
 			"Configure::write('BcApp.mobile', true);",
 			"Configure::write('BcApp.smartphone', true);",
 			"Cache::config('default', array('engine' => 'File'));",
